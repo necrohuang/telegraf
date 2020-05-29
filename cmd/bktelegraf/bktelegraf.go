@@ -24,6 +24,12 @@ func GetTelegrafAgent(configFile, logFile string) (*agent.Agent, error) {
 		return nil, err
 	}
 
-	logger.SetupLogging(false, false, logFile)
+	logConfig := logger.LogConfig{
+		Logfile:             logFile,
+		LogTarget:           logger.LogTargetFile,
+		RotationMaxArchives: -1,
+	}
+
+	logger.SetupLogging(logConfig)
 	return agent.NewAgent(c)
 }
